@@ -72,35 +72,37 @@ const getReturnMessage = (level, points) => {
   return message;
 };
 
-export const command = {
+const command = {
   data: new SlashCommandBuilder()
     .setName('snek')
     .setDescription(
       'Responds with info on how far from completing the Serpent Moon event you have to go.'
     )
     .addIntegerOption((option) => {
-      option
-        .setName('Pass Level')
+      return option
+        .setName('passlevel')
         .setDescription(
           'The level of the event battle pass you are currently at.'
         )
         .setRequired(true)
-        .addChoices(bpLevels);
+        .addChoices(...bpLevels);
     })
     .addIntegerOption((option) => {
-      option
-        .setName('Level Points')
+      return option
+        .setName('levelpoints')
         .setDescription(
           'The amount of points you have at your current battle pass level.'
         )
         .setRequired(true);
     }),
   async execute(interaction) {
-    const level = interaction.options.getInteger('Pass Level');
-    const points = interaction.options.getInteger('Level Points');
+    const level = interaction.options.getInteger('passlevel');
+    const points = interaction.options.getInteger('levelpoints');
     await interaction.reply({
       content: getReturnMessage(level, points),
       ephemeral: true,
     });
   },
 };
+
+export default command;

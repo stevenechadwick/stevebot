@@ -1,6 +1,6 @@
 import { Client, Collection, GatewayIntentBits } from 'discord.js';
-import config from '../config.json';
-import snek from '../commands';
+import config from '../config.json' assert { type: 'json' };
+import { default as snek } from '../commands/snek.js';
 
 const { token } = config;
 

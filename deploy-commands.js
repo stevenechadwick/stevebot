@@ -1,11 +1,11 @@
 import { SlashCommandBuilder, Routes } from 'discord.js';
 import { REST } from '@discordjs/rest';
 import config from './config.json' assert { type: 'json' };
-import snek from './commands';
+import { default as snek } from './commands/snek.js';
 
 const { token, clientId } = config;
 
-const commands = [snek].map((command) => command.toJSON());
+const commands = [snek].map((command) => command.data.toJSON());
 
 const rest = new REST({ version: '10' }).setToken(token);
 
