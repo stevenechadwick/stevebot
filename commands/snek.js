@@ -1,8 +1,8 @@
 import { SlashCommandBuilder } from 'discord.js';
 import moment from 'moment';
 
-const eventStartDate = moment('2022-07-27');
-const eventEndDate = moment('2022-09-26');
+const eventStartDate = moment([2022, 6, 27]);
+const eventEndDate = moment([2022, 8, 26]);
 
 const bpLevels = [...Array(20).keys()].map((level) => {
   const entry = {
@@ -42,19 +42,16 @@ const calculatePoints = (level, points) => {
 };
 
 const calculateTimes = () => {
-  const now = moment();
-  const timeSoFar = moment.duration(now.diff(eventStartDate));
-  const timeLeft = moment.duration(eventEndDate.diff(now));
+  const now = moment().startOf('day');
+  const daysUsed = now.diff(eventStartDate, 'days');
+  const daysLeft = eventEndDate.diff(now, 'days');
 
-  return { timeSoFar, timeLeft };
+  return { daysUsed, daysLeft };
 };
 
 const getReturnMessage = (level, points) => {
-  const { timeSoFar, timeLeft } = calculateTimes();
+  const { daysUsed, daysLeft } = calculateTimes();
   const { currentPoints, pointsRemaining } = calculatePoints(level, points);
-
-  const daysUsed = timeSoFar.days();
-  const daysLeft = timeLeft.days();
 
   const averageRateSoFar = currentPoints / daysUsed;
   const averageNeededToFinish = pointsRemaining / daysLeft;
