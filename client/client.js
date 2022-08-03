@@ -1,8 +1,6 @@
+import 'dotenv/config';
 import { Client, Collection, GatewayIntentBits } from 'discord.js';
-import config from '../config.json' assert { type: 'json' };
 import { default as snek } from '../commands/snek.js';
-
-const { token } = config;
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
@@ -35,6 +33,6 @@ client.on('interactionCreate', async (interaction) => {
   }
 });
 
-client.login(token);
+client.login(process.env.TOKEN);
 
 export default client;
