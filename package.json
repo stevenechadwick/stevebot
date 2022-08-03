@@ -13,7 +13,9 @@
   "author": "Steve Chadwick",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^14.1.2"
+    "@discordjs/rest": "^1.0.1",
+    "discord.js": "^14.1.2",
+    "moment": "^2.29.4"
   },
   "devDependencies": {
     "eslint": "^8.21.0",
@@ -21,5 +23,6 @@
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
     "prettier": "2.7.1"
-  }
+  },
+  "type": "module"
 }
