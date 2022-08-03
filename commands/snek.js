@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from 'discord.js';
+import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
 import moment from 'moment';
 
 const eventStartDate = moment([2022, 6, 27]);
@@ -56,17 +56,28 @@ const getReturnMessage = (level, points) => {
   const averageRateSoFar = currentPoints / daysUsed;
   const averageNeededToFinish = pointsRemaining / daysLeft;
 
-  const message = `
-  ${daysUsed} days have passed.
-  ${daysLeft} days are left.
-  You have earned a total of ${currentPoints} points so far.
-  Your average point gain is ${averageRateSoFar} points/day.
-  To complete the event you need ${pointsRemaining} more points (that's ${
-    pointsRemaining / 2
-  } snakes).
-  This will require an average of ${averageNeededToFinish} points/day for the rest of the event.
-  `;
-  return message;
+  const embed = new EmbedBuilder()
+    .setColor(0x0099ff)
+    .setTitle('Snake Report')
+    .setAuthor({
+      name: 'SteveBot',
+      iconURL:
+        'https://i.kym-cdn.com/photos/images/original/001/232/368/b4a.jpg',
+    })
+    .setDescription('Summary of your Serpent Moon event progress.')
+    .setThumbnail(
+      'https://i.pinimg.com/564x/b1/83/47/b18347073d92a3ac715703fd8e63d19a.jpg'
+    )
+    .addFields(
+      { name: 'Days Passed', value: `${daysUsed}` },
+      { name: 'Days Left', value: `${daysLeft}` },
+      { name: 'Points Earned', value: `${currentPoints}` },
+      { name: 'Points Left', value: `${pointsRemaining}` },
+      { name: 'Points/Day', value: `${averageRateSoFar}` },
+      { name: 'Points/Day To Finish', value: `${averageNeededToFinish}` }
+    );
+
+  return embed;
 };
 
 const command = {
@@ -96,7 +107,7 @@ const command = {
     const level = interaction.options.getInteger('passlevel');
     const points = interaction.options.getInteger('levelpoints');
     await interaction.reply({
-      content: getReturnMessage(level, points),
+      embeds: [getReturnMessage(level, points)],
       ephemeral: true,
     });
   },
